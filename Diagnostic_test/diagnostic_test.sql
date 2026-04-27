@@ -141,6 +141,13 @@ Show customer_id, first_name, last_name.
 
 -- My Answer:
 
+SELECT c.customer_id, c.first_name, c.last_name, o.order_id
+FROM customers as c
+LEFT JOIN
+orders as o
+on c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+
 
 
 /*
@@ -150,7 +157,16 @@ Show product_id, product_name, category_name.
 
 -- My Answer:
 
-
+SELECT 
+    p.product_id,
+    p.product_name,
+    c.category_name
+FROM
+    products as p
+JOIN
+    categories as c
+ON
+    p.category_id = c.category_id;
 
 /*
 Q13. Find total quantity sold for each product.
@@ -160,6 +176,22 @@ Sort by total_quantity_sold descending.
 
 -- My Answer:
 
+SELECT 
+    p.product_id,
+    p.product_name, 
+    count(f.quantity) as total_quantity_sold
+FROM 
+    products as p
+JOIN
+    fact_sales as f
+ON 
+    p.product_id = f.product_id
+
+GROUP BY product_id, product_name
+ORDER BY total_quantity_sold DESC;
+
+
+
 
 
 /*
@@ -168,6 +200,17 @@ Show employee_id, employee full name, department_name, salary.
 */
 
 -- My Answer:
+SELECT 
+    e.employee_id, 
+    CONCAT(e.first_name," ",e.last_name) as "employee full name", 
+    d.department_name, e.salary
+FROM
+    employees as e
+JOIN
+    departments as d
+ON
+    e.department_id = d.department_id;
+
 
 
 
@@ -178,6 +221,12 @@ Show employee_id, full name, and salary.
 
 -- My Answer:
 
+SELECT 
+    employee_id, CONCAT(first_name ,' ', last_name) as 'full name', salary
+FROM
+    employees
+HAVING 
+    salary > (SELECT AVG(salary) FROM employees);
 
 
 /*
