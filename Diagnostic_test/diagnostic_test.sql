@@ -75,6 +75,10 @@ Show state and total_customers.
 
 -- My Answer:
 
+SELECT state, count(customer_id)
+FROM customers
+GROUP BY state;
+
 
 
 /*
@@ -84,7 +88,10 @@ Show state and total_customers.
 
 -- My Answer:
 
-
+SELECT state, count(customer_id) as total_customers
+FROM customers
+GROUP BY state
+HAVING total_customers > 1;
 
 /*
 Q8. Find the total net sales amount from fact_sales.
@@ -93,7 +100,8 @@ Net amount is already available in the net_amount column.
 
 -- My Answer:
 
-
+SELECT sum(net_amount)
+FROM fact_sales;
 
 /*
 Q9. Find total net sales by customer_id.
@@ -102,6 +110,10 @@ Sort by total_sales descending.
 */
 
 -- My Answer:
+
+SELECT customer_id, sum(net_amount)
+FROM fact_sales
+GROUP BY customer_id;
 
 
 
@@ -112,6 +124,13 @@ Use customers and orders tables.
 */
 
 -- My Answer:
+
+SELECT c.customer_id, CONCAT(c.first_name, ' ', c.last_name) as 'full customer name', o.order_id, o.order_date
+FROM customers as c
+JOIN
+orders as o
+ON
+c.customer_id = o.customer_id;
 
 
 
