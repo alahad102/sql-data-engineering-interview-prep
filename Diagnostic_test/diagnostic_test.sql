@@ -75,7 +75,7 @@ Show state and total_customers.
 
 -- My Answer:
 
-SELECT state, count(customer_id)
+SELECT state, count(customer_id) as total_customers
 FROM customers
 GROUP BY state;
 
@@ -111,9 +111,10 @@ Sort by total_sales descending.
 
 -- My Answer:
 
-SELECT customer_id, sum(net_amount)
+SELECT customer_id, sum(net_amount) as total_sales
 FROM fact_sales
-GROUP BY customer_id;
+GROUP BY customer_id
+ORDER BY total_sales DESC;
 
 
 
@@ -141,7 +142,7 @@ Show customer_id, first_name, last_name.
 
 -- My Answer:
 
-SELECT c.customer_id, c.first_name, c.last_name, o.order_id
+SELECT c.customer_id, c.first_name, c.last_name
 FROM customers as c
 LEFT JOIN
 orders as o
@@ -179,7 +180,7 @@ Sort by total_quantity_sold descending.
 SELECT 
     p.product_id,
     p.product_name, 
-    count(f.quantity) as total_quantity_sold
+    sum(f.quantity) as total_quantity_sold
 FROM 
     products as p
 JOIN
@@ -273,6 +274,13 @@ SELECT
 FROM fact_sales
 GROUP BY month;
 
+-- SELECT 
+--     DATE_FORMAT(order_date, '%Y-%m') AS sales_month,
+--     SUM(net_amount) AS total_sales
+-- FROM fact_sales
+-- GROUP BY DATE_FORMAT(order_date, '%Y-%m')
+-- ORDER BY sales_month;
+
 
 
 /*
@@ -289,8 +297,8 @@ Show order_id, product_id, net_amount, and value_category.
 SELECT 
     order_id, product_id, net_amount,
     CASE
-        WHEN net_amount >= 500 then 'High VAlue'
-        WHEN net_amount >= 100 AND net_amount <=500 then 'Medium Value'
+        WHEN net_amount >= 500 then 'High Value'
+        WHEN net_amount >= 100 AND net_amount <500 then 'Medium Value'
         ElSE 'Low Value'
     END AS value_category
 FROM
