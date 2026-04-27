@@ -225,7 +225,7 @@ SELECT
     employee_id, CONCAT(first_name ,' ', last_name) as 'full name', salary
 FROM
     employees
-HAVING 
+WHERE 
     salary > (SELECT AVG(salary) FROM employees);
 
 
