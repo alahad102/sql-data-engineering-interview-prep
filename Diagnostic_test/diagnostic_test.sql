@@ -237,7 +237,28 @@ You can solve using any method you know.
 
 -- My Answer:
 
-
+SELECT e.department_id, 
+       employee_id, 
+       CONCAT(first_name ,' ', last_name) 
+       as 'full name',
+       salary
+FROM
+    (SELECT 
+        d.department_id,  
+        max(salary) as max_salary
+    FROM
+    employees as e
+    JOIN
+    departments as d
+    ON
+    e.department_id = d.department_id
+    GROUP BY department_id) as subtable
+JOIN
+  employees as e
+ON
+    e.department_id = subtable.department_id
+WHERE
+    salary = max_salary;
 
 /*
 Q17. Find monthly total net sales.
@@ -246,6 +267,11 @@ Hint: use order_date from fact_sales.
 */
 
 -- My Answer:
+SELECT 
+    MONTHNAME(order_date) as month,
+    sum(net_amount) as total_sales
+FROM fact_sales
+GROUP BY month;
 
 
 
@@ -260,7 +286,15 @@ Show order_id, product_id, net_amount, and value_category.
 
 -- My Answer:
 
-
+SELECT 
+    order_id, product_id, net_amount,
+    CASE
+        WHEN net_amount >= 500 then 'High VAlue'
+        WHEN net_amount >= 100 AND net_amount <=500 then 'Medium Value'
+        ElSE 'Low Value'
+    END AS value_category
+FROM
+    fact_sales;
 
 /*
 Q19. Find duplicate customer_id values in stg_customers.
@@ -268,7 +302,10 @@ Show customer_id and duplicate_count.
 */
 
 -- My Answer:
-
+SELECT customer_id, count(customer_id) as duplicate_count
+FROM stg_customers
+GROUP BY customer_id
+HAVING duplicate_count > 1;
 
 
 /*
@@ -277,6 +314,16 @@ Show stg_order_id, order_id, customer_id, order_date.
 */
 
 -- My Answer:
+
+SELECT stg_order_id, order_id, s.customer_id, order_date
+FROM
+    stg_orders as s 
+LEFT JOIN
+    customers as c
+on
+    s.customer_id = c.customer_id
+WHERE c.customer_id IS NULL;
+
 
 
 
