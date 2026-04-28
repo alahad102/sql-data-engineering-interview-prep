@@ -350,6 +350,13 @@ WHERE
 -- WHERE state = 'Texas' OR 'California';
 -- Goal: customers from Texas or California.
 
+SELECT customer_id, first_name, last_name
+FROM customers
+WHERE 
+    state = 'Texas' 
+    OR 
+    state = 'California';
+
 
 
 -- DEBUG Q20.
@@ -359,6 +366,13 @@ WHERE
 -- FROM orders
 -- WHERE order_status = 'Completed' OR 'Returned';
 -- Goal: orders that are Completed or Returned.
+
+SELECT order_id, order_status
+FROM orders
+WHERE 
+    order_status = 'Completed' 
+    OR 
+    order_status = 'Returned';
 
 
 
@@ -370,6 +384,10 @@ WHERE
 -- WHERE phone = NULL;
 -- Goal: customers with missing phone numbers.
 
+SELECT customer_id, first_name, phone
+FROM customers
+WHERE phone IS NULL;
+
 
 
 -- DEBUG Q22.
@@ -379,6 +397,15 @@ WHERE
 -- FROM employees
 -- WHERE salary > 80000 AND < 120000;
 -- Goal: employees with salary greater than 80000 and less than 120000.
+
+SELECT 
+    employee_id, first_name, salary
+FROM 
+    employees
+WHERE 
+    salary > 80000
+    AND 
+    salary < 120000;
 
 
 
