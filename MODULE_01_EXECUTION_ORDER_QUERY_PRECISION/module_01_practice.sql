@@ -270,7 +270,7 @@ LIMIT 5;
 -- FROM orders;
 -- Goal: show only unique order statuses.
 
-SELECT DISTINCT order_status, customer_id
+SELECT DISTINCT order_status
 FROM orders;
 
 
