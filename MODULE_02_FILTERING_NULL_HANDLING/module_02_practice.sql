@@ -419,12 +419,39 @@ WHERE
 -- Find active customers from Texas or New York who have a non-null email.
 -- Show customer_id, full customer name, state, email, and customer_status.
 
+SELECT 
+    customer_id,
+    concat(first_name,' ',last_name) as full_customer_name,
+    state,
+    email,
+    customer_status
+FROM
+    customers
+WHERE
+    customer_status = 'Active'
+    AND
+    state in ('Texas','New York')
+    AND
+    email is NOT NULL;
+
 
 
 -- INTERVIEW Q24.
 -- Find completed online orders placed in the first half of 2025.
 -- Show order_id, customer_id, order_date, order_status, and channel.
 
+SELECT 
+    order_id,
+    customer_id,
+    order_date,
+    order_status,
+    channel
+FROM
+    orders
+WHERE 
+    order_status = 'Completed'
+    AND
+    order_date BETWEEN '2025-01-01' AND '2025-06-30';
 
 
 -- INTERVIEW Q25.
@@ -433,6 +460,15 @@ WHERE
 -- OR amount is greater than 500.
 -- Show payment_id, order_id, payment_status, amount, and payment_date.
 -- Use parentheses so the logic is clear.
+
+SELECT
+    payment_id, order_id, payment_status, amount, payment_date
+FROM
+    payments
+WHERE
+    payment_status IN ('Failed', 'Pending', 'Refunded')
+    OR
+    amount > 500;
 
 
 
@@ -443,6 +479,16 @@ WHERE
 -- Show ticket_id, customer_id, issue_type, priority, ticket_status, and created_date.
 
 
+SELECT
+    ticket_id, customer_id,issue_type,priority,ticket_status,created_date
+FROM
+    support_tickets
+WHERE
+    ticket_status = 'Open'
+    AND
+    priority IN ('High','Medium');
+
+
 
 -- INTERVIEW Q27.
 -- Find valid staging customer records from stg_customers:
@@ -450,6 +496,17 @@ WHERE
 -- email contains '@',
 -- signup_date is not 'bad-date'.
 -- Show stg_customer_id, customer_id, full_name, email, signup_date, and load_date.
+
+SELECT
+    stg_customer_id, customer_id, full_name, email,signup_date,load_date
+FROM
+    stg_customers
+WHERE
+    email is NOT NULL
+    AND
+    email like "%@%"
+    AND
+    signup_date != 'bad-date';
 
 
 
@@ -459,3 +516,14 @@ WHERE
 -- OR order_date is 'bad-date'
 -- OR customer_id is 99.
 -- Show stg_order_id, order_id, customer_id, order_date, order_status, channel, and load_date.
+
+SELECT
+    stg_order_id, order_id, customer_id, order_date, order_status, channel, load_date
+FROM
+    stg_orders
+WHERE
+    order_status is NULL
+    OR
+    order_date = 'bad-date'
+    OR
+    customer_id = 99;
