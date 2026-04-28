@@ -18,6 +18,7 @@ Mistake focus:
 - Format queries clearly
 */
 
+-- Part 1
 
 -- Q1. Show all columns from customers.
 
@@ -107,3 +108,70 @@ FROM customers;
 SELECT order_id, SUM(net_amount) as total_amount
 FROM fact_sales
 GROUP BY order_id;
+
+
+
+
+-- =====================================================
+-- PART 2: DISTINCT, ORDER BY, LIMIT, AND EXECUTION ORDER
+-- =====================================================
+
+-- Q16. Show all unique customer states.
+SELECT DISTINCT state
+FROM customers;
+
+
+-- Q17. Show all unique order statuses.
+
+SELECT DISTINCT order_status
+FROM orders;
+
+-- Q18. Show all unique sales channels from orders.
+
+SELECT DISTINCT channel
+FROM orders;
+
+-- Q19. Show all unique product categories using category_id from products.
+
+SELECT DISTINCT category_id
+FROM products;
+
+
+-- Q20. Show all unique employee job titles.
+
+SELECT DISTINCT job_title
+FROM employees;
+
+
+-- Q21. Show the 3 newest customers based on created_at.
+
+
+
+-- Q22. Show the 3 oldest customers based on created_at.
+
+
+
+-- Q23. Show the 5 cheapest products.
+
+
+
+-- Q24. Show the 5 most recent payments.
+
+
+
+-- Q25. Show the 5 most recent support tickets.
+
+
+
+-- Q26. Show the 5 most recent completed orders.
+-- Write execution thinking before the query.
+
+
+
+-- Q27. Show the 5 highest salary employees whose salary is greater than 70000.
+-- Write execution thinking before the query.
+
+
+
+-- Q28. Show the 10 most expensive products where unit_price is greater than 50.
+-- Write execution thinking before the query.
