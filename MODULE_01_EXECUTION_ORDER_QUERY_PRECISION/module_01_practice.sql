@@ -196,10 +196,16 @@ limit 5;
 -- Q27. Show the 5 highest salary employees whose salary is greater than 70000.
 -- Write execution thinking before the query.
 
-SELECT salary
+SELECT 
+    employee_id,
+    first_name,
+    last_name,
+    job_title,
+    salary
 FROM employees
+WHERE salary > 70000
 ORDER BY salary DESC
-limit 5;
+LIMIT 5;
 
 
 
