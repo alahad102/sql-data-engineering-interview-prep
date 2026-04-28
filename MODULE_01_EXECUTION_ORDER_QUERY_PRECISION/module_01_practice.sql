@@ -145,21 +145,41 @@ FROM employees;
 
 -- Q21. Show the 3 newest customers based on created_at.
 
+SELECT CONCAT(first_name," ",last_name) as customer_name, signup_date
+FROM customers
+ORDER BY signup_date DESC
+LIMIT 3;
 
 
 -- Q22. Show the 3 oldest customers based on created_at.
 
-
+SELECT CONCAT(first_name," ",last_name) as customer_name, signup_date
+FROM customers
+ORDER BY signup_date 
+LIMIT 3;
 
 -- Q23. Show the 5 cheapest products.
+
+SELECT product_name, unit_price
+FROM products
+ORDER BY unit_price
+LIMIT 5;
 
 
 
 -- Q24. Show the 5 most recent payments.
 
-
+SELECT payment_date
+FROM payments
+ORDER BY payment_date DESC
+LIMIT 5;
 
 -- Q25. Show the 5 most recent support tickets.
+
+SELECT ticket_id, created_date
+FROM support_tickets
+ORDER BY created_date DESC
+LIMIT 5;
 
 
 
