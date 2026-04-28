@@ -353,3 +353,103 @@ LIMIT 5;
 
 SELECT customer_id, CONCAT(first_name,' ',last_name) AS full_name
 FROM customers;
+
+
+
+
+-- =====================================================
+-- PART 4: MINI MIXED PRACTICE
+-- =====================================================
+
+-- Q39. Show customer_id, full customer name, city, state, and signup_date for the 10 newest customers.
+
+SELECT customer_id, concat(first_name,' ',last_name), city, state, signup_date
+FROM customers
+ORDER BY signup_date DESC
+LIMIT 10;
+
+-- Q40. Show product_id, product_name, unit_price, and stock_quantity for the 5 most expensive products.
+SELECT product_id, product_name, unit_price, quantity_in_stock
+FROM products
+ORDER BY unit_price DESC
+LIMIT 5;
+
+
+
+-- Q41. Show order_id, customer_id, order_date, order_status, and channel for the 10 most recent completed orders.
+SELECT order_id, customer_id, order_date, order_status, channel
+FROM orders
+WHERE status = 'Completed'
+ORDER BY order_date DESC
+LIMIT 10;
+
+
+
+-- Q42. Show payment_id, order_id, payment_method, amount, and payment_date for the 5 largest payments.
+
+SELECT payment_id, order_id, payment_method, amount, payment_date
+FROM payments
+ORDER BY amount DESC
+LIMIT 5;
+
+
+
+-- Q43. Show ticket_id, customer_id, issue_type, status, priority, and created_date for open support tickets.
+SELECT ticket_id, customer_id, issue_type, ticket_status, priority, created_date
+FROM support_tickets
+WHERE ticket_status = 'Open';
+
+
+-- Q44. Show unique support ticket priorities.
+
+SELECT DISTINCT priority
+FROM support_tickets;
+
+-- Q45. Show unique payment methods.
+SELECT DISTINCT payment_method
+FROM payments;
+
+
+-- Q46. Show employee_id, full employee name, job_title, salary, and hire_date for the 5 newest employees.
+
+SELECT employee_id, concat(first_name,' ',last_name) as full_employee_name, job_title, salary, hire_date
+FROM employees
+ORDER BY hire_date DESC
+LIMIT 5;
+
+
+
+-- Q47. Show product_id, product_name, unit_price, 
+-- and stock_quantity for products where unit_price is greater than 50, ordered by unit_price high to low.
+
+SELECT product_id, product_name, unit_price, quantity_in_stock
+FROM products
+WHERE unit_price > 50
+ORDER BY unit_price DESC;
+
+
+
+-- Q48. Show customer_id, full customer name, city, state, and customer_status for active customers from Texas.
+
+SELECT customer_id, CONCAT(first_name,' ', last_name), city, state, customer_status
+FROM customers
+WHERE customer_status = 'Active' AND state = 'Texas';
+
+
+
+-- Q49. Show order_id, customer_id, order_date, order_status, 
+--and channel for orders from the Online channel, ordered by newest first, limit 10.
+
+SELECT order_id, customer_id, order_date, order_status, channel
+FROM orders
+WHERE channel = 'Online'
+ORDER BY order_date DESC
+LIMIT 10;
+
+-- Q50. Show employee_id, full employee name, job_title, 
+--and salary for employees with salary greater than 80000, ordered by salary high to low.
+
+SELECT employee_id, concat(first_name,' ',last_name), job_title, salary
+FROM employees
+WHERE salary > 80000
+ORDER BY salary DESC;
