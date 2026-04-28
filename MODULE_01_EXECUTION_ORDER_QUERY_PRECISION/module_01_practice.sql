@@ -379,7 +379,7 @@ LIMIT 5;
 -- Q41. Show order_id, customer_id, order_date, order_status, and channel for the 10 most recent completed orders.
 SELECT order_id, customer_id, order_date, order_status, channel
 FROM orders
-WHERE status = 'Completed'
+WHERE order_status = 'Completed'
 ORDER BY order_date DESC
 LIMIT 10;
 
@@ -422,7 +422,7 @@ LIMIT 5;
 -- Q47. Show product_id, product_name, unit_price, 
 -- and stock_quantity for products where unit_price is greater than 50, ordered by unit_price high to low.
 
-SELECT product_id, product_name, unit_price, quantity_in_stock
+SELECT product_id, product_name, unit_price
 FROM products
 WHERE unit_price > 50
 ORDER BY unit_price DESC;
