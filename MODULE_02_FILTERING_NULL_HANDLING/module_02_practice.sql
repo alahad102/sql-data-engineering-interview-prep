@@ -44,7 +44,7 @@ WHERE
 
 SELECT 
     employee_id,
-    concat(first_name,' ',last_name),
+    concat(first_name,' ',last_name) as full_employee_name,
     job_title,
     salary,
     hire_date
@@ -89,7 +89,10 @@ SELECT
     customer_status
 FROM
     customers
-WHERE customer_status = 'Active';
+WHERE 
+    customer_status = 'Active'
+    AND
+    state = 'Texas';
 
 
 -- MEDIUM Q5.
@@ -104,7 +107,7 @@ SELECT
     channel
 FROM
     orders
-WHERE order_status = 'Completed' AND channel IN ('online', 'mobile');
+WHERE order_status = 'Completed' AND channel IN ('Online', 'Mobile');
 
 
 -- HARD Q6.
@@ -166,7 +169,7 @@ SELECT
     channel
 FROM    
     orders
-WHERE order_status NOT IN ('Cancelled', 'Return');
+WHERE order_status NOT IN ('Cancelled', 'Returned');
 
 
 -- HARD Q9.
@@ -181,7 +184,7 @@ FROM
 WHERE
     (product_status = 'Active')
     AND 
-    (category_id IN ('1','2','5')) 
+    (category_id IN (1,2,5)) 
     AND 
     (unit_price > 50);
 
@@ -328,11 +331,18 @@ WHERE
 -- Hint: check shipment_date, delivery_date, and carrier.
 
 SELECT 
-    shipment_id, order_id, shipment_date, delivery_date, carrier,shipment_status
-FROM
+    shipment_id, 
+    order_id, 
+    shipment_date, 
+    delivery_date, 
+    carrier,
+    shipment_status
+FROM 
     shipments
-WHERE
-    shipment_date is NULL;
+WHERE 
+    shipment_date IS NULL
+    AND delivery_date IS NULL
+    AND carrier IS NULL;
 
 
 
@@ -451,6 +461,8 @@ FROM
 WHERE 
     order_status = 'Completed'
     AND
+    channel = 'Online'
+    AND
     order_date BETWEEN '2025-01-01' AND '2025-06-30';
 
 
@@ -504,9 +516,9 @@ FROM
 WHERE
     email is NOT NULL
     AND
-    email like "%@%"
+    email like '%@%'
     AND
-    signup_date != 'bad-date';
+    signup_date <> 'bad-date';
 
 
 
