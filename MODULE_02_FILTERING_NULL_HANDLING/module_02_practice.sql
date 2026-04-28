@@ -242,9 +242,17 @@ WHERE
 -- Industry idea: Useful for text search, data cleaning, email/domain checks.
 -- =====================================================
 
+
+
 -- EASY Q13.
 -- Show customer_id, first_name, last_name, and email
 -- for customers whose email ends with '@email.com'.
+
+SELECT 
+    customer_id, first_name, last_name, email
+FROM
+    customers
+WHERE email like '%@email.com';
 
 
 
@@ -253,12 +261,37 @@ WHERE
 -- for products where product_name contains the word 'Desk', 'Chair', or 'Table'.
 -- Use LIKE and OR.
 
+SELECT 
+    product_id,
+    product_name,
+    unit_price
+FROM
+    products
+WHERE
+    product_name LIKE '%Desk%' 
+    OR 
+    product_name LIKE'%Chair%'
+    OR
+    product_name like '%Table%';
 
 
 -- HARD Q15.
 -- Show event_id, customer_id, event_date, event_type, page_url, and device_type
 -- for web events where page_url contains '/product/' and device_type is Desktop.
 
+SELECT
+    event_id,
+    customer_id,
+    event_date,
+    event_type,
+    page_url,
+    device_type
+FROM
+    web_events
+WHERE
+    page_url like '%/product/%'
+    AND
+    device_type = 'Desktop';
 
 
 -- =====================================================
