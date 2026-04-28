@@ -369,7 +369,10 @@ ORDER BY signup_date DESC
 LIMIT 10;
 
 -- Q40. Show product_id, product_name, unit_price, and stock_quantity for the 5 most expensive products.
-SELECT product_id, product_name, unit_price, quantity_in_stock
+SELECT 
+    product_id, 
+    product_name, 
+    unit_price
 FROM products
 ORDER BY unit_price DESC
 LIMIT 5;
