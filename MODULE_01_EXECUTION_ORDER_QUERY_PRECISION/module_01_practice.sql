@@ -186,12 +186,28 @@ LIMIT 5;
 -- Q26. Show the 5 most recent completed orders.
 -- Write execution thinking before the query.
 
+SELECT * FROM orders
+WHERE order_status = "Completed"
+ORDER BY order_date DESC
+limit 5;
+
 
 
 -- Q27. Show the 5 highest salary employees whose salary is greater than 70000.
 -- Write execution thinking before the query.
 
+SELECT salary
+FROM employees
+ORDER BY salary DESC
+limit 5;
+
 
 
 -- Q28. Show the 10 most expensive products where unit_price is greater than 50.
 -- Write execution thinking before the query.
+
+SELECT product_name, unit_price
+FROM products
+WHERE unit_price > 50
+ORDER BY unit_price DESC
+LIMIT 10;
