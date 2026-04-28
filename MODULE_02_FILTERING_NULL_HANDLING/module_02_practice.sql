@@ -193,9 +193,16 @@ WHERE
 -- Industry idea: Common for date windows, salary ranges, price ranges.
 -- =====================================================
 
+
 -- EASY Q10.
 -- Show product_id, product_name, and unit_price
 -- for products with unit_price between 50 and 150.
+
+SELECT 
+    product_id, product_name, unit_price
+FROM
+    products
+WHERE unit_price BETWEEN 50 AND 150;
 
 
 
@@ -203,6 +210,12 @@ WHERE
 -- Show order_id, customer_id, order_date, order_status, and channel
 -- for orders placed between '2025-03-01' and '2025-06-30'.
 
+SELECT
+    order_id, customer_id, order_date, order_status, channel
+FROM
+    orders
+WHERE 
+    order_date BETWEEN '2025-03-01' AND '2025-06-30';
 
 
 -- HARD Q12.
@@ -210,7 +223,18 @@ WHERE
 -- for employees with salary between 90000 and 120000
 -- who were hired before '2023-01-01'.
 
-
+SELECT
+    employee_id,
+    CONCAT(first_name,' ',last_name),
+    job_title,
+    salary,
+    hire_date
+FROM
+    employees
+WHERE 
+    (salary BETWEEN 90000 AND 120000)
+    AND
+    (hire_date < '2023-01-01');
 
 -- =====================================================
 -- PART 5: LIKE
