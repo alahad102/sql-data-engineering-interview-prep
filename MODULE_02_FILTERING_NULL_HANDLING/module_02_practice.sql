@@ -304,19 +304,35 @@ WHERE
 -- Show customer_id, first_name, last_name, email, and phone
 -- for customers whose phone is missing.
 
-
+SELECT
+    customer_id, first_name, last_name, email, phone
+FROM
+    customers
+WHERE phone is NULL;
 
 -- MEDIUM Q17.
 -- Show ticket_id, customer_id, created_date, resolved_date, issue_type, and ticket_status
 -- for support tickets that are still unresolved.
 -- Hint: unresolved tickets have resolved_date IS NULL.
 
-
+SELECT
+    ticket_id, customer_id, created_date, resolved_date, issue_type,ticket_status
+FROM
+    support_tickets
+WHERE
+    resolved_date is NULL;
 
 -- HARD Q18.
 -- Show shipment_id, order_id, shipment_date, delivery_date, carrier, and shipment_status
 -- for shipments that have not actually shipped yet.
 -- Hint: check shipment_date, delivery_date, and carrier.
+
+SELECT 
+    shipment_id, order_id, shipment_date, delivery_date, carrier,shipment_status
+FROM
+    shipments
+WHERE
+    shipment_date is NULL;
 
 
 
