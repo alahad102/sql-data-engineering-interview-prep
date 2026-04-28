@@ -217,3 +217,139 @@ FROM products
 WHERE unit_price > 50
 ORDER BY unit_price DESC
 LIMIT 10;
+
+
+-- =====================================================
+-- PART 3: DEBUGGING WRONG QUERIES
+-- =====================================================
+
+-- Q29. Fix this query.
+-- Wrong query:
+-- SELECT customer_id, first_name, last_name
+-- WHERE state = 'Texas'
+-- FROM customers;
+
+
+SELECT customer_id, first_name, last_name
+FROM customers
+WHERE state = 'Texas';
+
+
+
+
+-- Q30. Fix this query.
+-- Wrong query:
+-- SELECT product_name, unit_price
+-- FROM products
+-- ORDER BY unit_price DESC
+-- WHERE unit_price > 100;
+
+SELECT product_name, unit_price
+FROM products
+WHERE unit_price > 100
+ORDER BY unit_price DESC;
+
+
+-- Q31. Fix this query.
+-- Wrong query:
+-- SELECT order_id, customer_id, order_date
+-- FROM orders
+-- LIMIT 5
+-- ORDER BY order_date DESC;
+
+SELECT order_id, customer_id, order_date
+FROM orders
+ORDER BY order_date DESC
+LIMIT 5;
+
+
+
+-- Q32. Fix this query.
+-- Wrong query:
+-- SELECT DISTINCT customer_id, order_status
+-- FROM orders;
+-- Goal: show only unique order statuses.
+
+SELECT DISTINCT order_status, customer_id
+FROM orders;
+
+
+-- Q33. Fix this query.
+-- Wrong query:
+-- SELECT first_name + ' ' + last_name AS full_name
+-- FROM customers;
+-- Goal: show full customer name in MySQL.
+
+
+SELECT CONCAT(first_name,' ',last_name) AS full_name
+FROM customers;
+
+
+
+
+-- Q34. Fix this query.
+-- Wrong query:
+-- SELECT product_name unit_price
+-- FROM products;
+-- Goal: show product_name and unit_price.
+
+SELECT product_name, unit_price
+FROM products;
+
+
+
+-- Q35. Fix this query.
+-- Wrong query:
+-- SELECT order_id, customer_id, order_status
+-- FROM orders
+-- WHERE order_status = Completed;
+-- Goal: show completed orders.
+
+SELECT order_id, customer_id, order_status
+FROM orders
+WHERE order_status = 'Completed';
+
+
+
+-- Q36. Fix this query.
+-- Wrong query:
+-- SELECT employee_id, first_name, salary
+-- FROM employees
+-- WHERE salary > 70000
+-- LIMIT 5
+-- ORDER BY salary DESC;
+
+SELECT employee_id, first_name, salary
+FROM employees
+WHERE salary > 70000
+ORDER BY salary DESC
+LIMIT 5;
+
+
+
+-- Q37. Fix this query.
+-- Wrong query:
+-- SELECT customer_id, first_name, last_name
+-- FROM customers
+-- WHERE state = 'Texas'
+-- ORDER BY signup_date DESC
+-- LIMIT;
+-- Goal: show 5 newest Texas customers.
+
+SELECT customer_id, first_name, last_name
+FROM customers
+WHERE state = 'Texas'
+ORDER BY signup_date DESC
+LIMIT 5;
+
+
+
+-- Q38. Fix this query.
+-- Wrong query:
+-- SELECT customer_id, CONCAT(first_name, last_name) AS full_name
+-- FROM customers;
+-- Goal: full_name should have a space between first and last name.
+
+
+SELECT customer_id, CONCAT(first_name,' ',last_name) AS full_name
+FROM customers;
