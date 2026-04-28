@@ -143,6 +143,14 @@ WHERE
 -- for orders where channel is Online, Mobile, or Store.
 -- Use IN.
 
+SELECT 
+    order_id,
+    customer_id,
+    order_status,
+    channel
+FROM
+    orders
+WHERE channel IN ('Online', 'Mobile','Store');
 
 
 -- MEDIUM Q8.
@@ -150,12 +158,32 @@ WHERE
 -- for orders where order_status is not Cancelled and not Returned.
 -- Use NOT IN.
 
+SELECT 
+    order_id,
+    customer_id,
+    order_date,
+    order_status,
+    channel
+FROM    
+    orders
+WHERE order_status NOT IN ('Cancelled', 'Return');
 
 
 -- HARD Q9.
 -- Show product_id, product_name, category_id, unit_price, and product_status
 -- for active products that belong to category_id 1, 2, or 5
 -- and have unit_price greater than 50.
+
+SELECT 
+    product_id, product_name, category_id, unit_price,product_status
+FROM
+    products
+WHERE
+    (product_status = 'Active')
+    AND 
+    (category_id IN ('1','2','5')) 
+    AND 
+    (unit_price > 50);
 
 
 
