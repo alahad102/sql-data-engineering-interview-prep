@@ -1,231 +1,310 @@
 -- =====================================================
 -- MODULE 4: JOINS AND MULTI-TABLE QUERIES
+-- DATABASE: data_engineer_practice
 -- =====================================================
 
 -- Goal:
--- In this module, I will learn how to combine data from multiple tables using joins.
--- I will practice INNER JOIN, LEFT JOIN, RIGHT JOIN, multiple joins, joins with aggregation,
--- and interview-style join problems.
+-- Practice joins using the actual database tables.
+-- Focus on real interview-style join problems without repeating the same type too much.
 
--- Main concepts:
--- 1. INNER JOIN
--- 2. LEFT JOIN
--- 3. RIGHT JOIN
--- 4. Joining more than two tables
--- 5. ON vs WHERE
--- 6. Join + GROUP BY
--- 7. Finding unmatched records
--- 8. Avoiding duplicate rows from wrong join logic
+-- Tables used:
+-- customers
+-- orders
+-- order_items
+-- products
+-- categories
+-- suppliers
+-- payments
+-- shipments
+-- inventory
+-- departments
+-- employees
+-- fact_sales
+-- dim_customer
+-- dim_product
+-- stg_orders
+-- stg_customers
 
 -- =====================================================
--- EASY PRACTICE
+-- PART 1: BASIC INNER JOIN
 -- =====================================================
 
 -- Q1. Show each employee's first name, last name, and department name.
 
+SELECT
+    e.first_name, e.last_name,d.department_name
+FROM
+    employees AS e
+JOIN
+    departments AS d
+ON
+    e.department_id = d.department_id;
 
 
--- Q2. Show each employee's first name, last name, job title, and department name.
+-- Q2. Show each employee's full name, job title, salary, and department name.
 
-
-
--- Q3. Show each department name with its location id.
-
-
-
--- Q4. Show each employee's full name and the department id they belong to.
-
-
-
--- Q5. Show each employee's full name and department name using INNER JOIN.
-
-
-
--- Q6. Show employee id, employee full name, department id, and department name.
-
-
-
--- Q7. Show all employees who belong to a department.
+SELECT
+    CONCAT(e.first_name,' ',e.last_name) as full_name, e.job_title, e.salary, d.department_name
+FROM
+    employees AS e
+JOIN
+    departments AS d
+ON
+    e.department_id = d.department_id;
 
 
 
--- Q8. Show all employees with their department names, sorted by department name.
+
+-- Q3. Show each order id, order date, customer first name, customer last name, and order status.
+
+SELECT
+    o.order_id, o.order_date, c.first_name, c.last_name, o.order_status
+FROM
+    orders as o
+JOIN
+    customers as c
+ON
+    o.customer_id = c.customer_id;
 
 
 
--- Q9. Show all employees with their department names, sorted by employee last name.
+-- Q4. Show each product name with its category name.
+
+SELECT
+    p.product_name, c.category_name
+FROM
+    products as p
+JOIN
+    categories as c
+ON
+    p.category_id = c.category_id;
+
+
+-- Q5. Show each product name with its supplier name and supplier country.
+
+SELECT
+    p.product_name, s.supplier_name, s.country
+FROM
+    products as p
+JOIN
+    suppliers as s
+ON
+    p.supplier_id = s.supplier_id;
+
+
+-- =====================================================
+-- PART 2: BUSINESS JOIN QUESTIONS
+-- =====================================================
+
+-- Q6. Show each order id, customer full name, order date, and channel.
 
 
 
--- Q10. Show department name and manager id from the departments table.
+-- Q7. Show each order item with order id, product name, quantity, unit price, and discount amount.
+
+
+
+-- Q8. Show each order id, product name, quantity, and line total before discount.
+
+
+
+-- Q9. Show each order id, product name, quantity, and line total after discount.
+
+
+
+-- Q10. Show each payment with order id, customer full name, payment method, payment status, and amount.
 
 
 
 -- =====================================================
--- MEDIUM PRACTICE
+-- PART 3: LEFT JOIN AND MISSING DATA
 -- =====================================================
 
--- Q11. Show all employees and their department names, including employees who may not have a department.
+-- Q11. Show all customers and their orders, including customers who never placed an order.
 
 
 
--- Q12. Show all departments and employees in those departments, including departments that may not have employees.
+-- Q12. Find customers who never placed an order.
 
 
 
--- Q13. Find employees who do not belong to any department.
+-- Q13. Show all orders and their shipment status, including orders that may not have shipment records.
 
 
 
--- Q14. Find departments that have no employees.
+-- Q14. Find orders that do not have a shipment record.
 
 
 
--- Q15. Count how many employees are in each department. Show department name and employee count.
-
-
-
--- Q16. Find departments that have more than 5 employees. Show department name and employee count.
-
-
-
--- Q17. Find the average salary of employees in each department. Show department name and average salary.
-
-
-
--- Q18. Find departments where average salary is greater than 60000. Show department name and average salary.
-
-
-
--- Q19. Find the highest salary in each department. Show department name and highest salary.
-
-
-
--- Q20. Find total salary paid in each department. Show department name and total salary.
+-- Q15. Show all products and their inventory stock quantity, including products that may not exist in inventory.
 
 
 
 -- =====================================================
--- JOIN + FILTERING PRACTICE
+-- PART 4: JOIN WITH AGGREGATION
 -- =====================================================
 
--- Q21. Show employees and department names only for employees whose salary is greater than 50000.
+-- Q16. Count total orders placed by each customer.
 
 
 
--- Q22. Show departments and employees only for department id 10.
+-- Q17. Find customers who placed more than 2 orders.
 
 
 
--- Q23. Show employees whose department name is 'Sales'.
+-- Q18. Find total sales amount per customer using orders and order_items.
 
 
 
--- Q24. Show employees whose department name is 'IT'.
+-- Q19. Find total quantity sold for each product.
 
 
 
--- Q25. Show employees whose salary is greater than the average salary of their own department.
-
-
-
--- =====================================================
--- MULTI-TABLE JOIN PRACTICE
--- =====================================================
-
--- Q26. Show employee full name, department name, and location id.
-
-
-
--- Q27. Show employee full name, department name, and city.
-
-
-
--- Q28. Show department name, city, and country id.
-
-
-
--- Q29. Show employee full name, department name, city, and country id.
-
-
-
--- Q30. Show all departments with their city information, including departments even if no employee works there.
+-- Q20. Find total revenue per product category.
 
 
 
 -- =====================================================
--- HARD / INTERVIEW PRACTICE
+-- PART 5: MULTI-TABLE JOINS
 -- =====================================================
 
--- Q31. Find departments with no employees.
+-- Q21. Show order id, customer full name, product name, category name, quantity, and net line amount.
 
 
 
--- Q32. Find employees without departments.
+-- Q22. Show customer full name, product name, supplier name, and order date for every purchased product.
 
 
 
--- Q33. Find the department or departments with the highest employee count.
+-- Q23. Show category name and total revenue for each category.
 
 
 
--- Q34. Find the department or departments with the highest average salary.
+-- Q24. Show supplier name and total revenue generated from their products.
 
 
 
--- Q35. Find employees who earn more than their department average salary.
-
-
-
--- Q36. Find departments where total salary is greater than the average total salary across departments.
-
-
-
--- Q37. Find department names where the number of employees is greater than the average employee count across departments.
-
-
-
--- Q38. Find employees who work in the same department as employee id 100.
-
-
-
--- Q39. Find employees who have the same job title as another employee.
-
-
-
--- Q40. Find departments where the maximum salary is greater than the company average salary.
+-- Q25. Show customer full name and total amount paid successfully.
 
 
 
 -- =====================================================
--- PERSONAL NOTES
+-- PART 6: JOIN + FILTERING
 -- =====================================================
 
--- INNER JOIN returns only matching rows from both tables.
+-- Q26. Show customers who placed orders through the Online channel.
 
--- LEFT JOIN returns all rows from the left table and matching rows from the right table.
--- If no match exists, right table columns become NULL.
 
--- RIGHT JOIN returns all rows from the right table and matching rows from the left table.
--- In practice, LEFT JOIN is usually preferred.
 
--- ON is used to define how tables are connected.
+-- Q27. Show products sold in completed orders only.
 
--- WHERE is used to filter rows after the join result is created.
 
--- For unmatched records, use LEFT JOIN with IS NULL.
 
--- Example pattern:
--- SELECT columns
--- FROM table1
--- LEFT JOIN table2
--- ON table1.key = table2.key
--- WHERE table2.key IS NULL;
+-- Q28. Show customers who had failed or pending payments.
 
--- When using JOIN with GROUP BY:
--- 1. Join the tables first.
--- 2. Group by the meaningful column.
--- 3. Apply aggregate functions.
--- 4. Use HAVING if filtering grouped results.
 
--- End of Module 4
+
+-- Q29. Show orders that were delivered by FedEx.
+
+
+
+-- Q30. Show active products that have stock quantity less than 50.
+
+
+
+-- =====================================================
+-- PART 7: EMPLOYEE SELF JOIN
+-- =====================================================
+
+-- Q31. Show each employee with their manager name.
+
+
+
+-- Q32. Show employees who do not have a manager.
+
+
+
+-- Q33. Show each manager and the number of employees reporting to them.
+
+
+
+-- Q34. Show employees whose salary is greater than their manager's salary.
+
+
+
+-- =====================================================
+-- PART 8: DATA ENGINEERING STYLE JOIN QUESTIONS
+-- =====================================================
+
+-- Q35. Compare orders table with fact_sales.
+-- Show order ids that exist in orders but do not exist in fact_sales.
+
+
+
+-- Q36. Show fact_sales records with customer full name from dim_customer.
+
+
+
+-- Q37. Show fact_sales records with product name and category name from dim_product.
+
+
+
+-- Q38. Find staging orders where customer_id does not exist in the customers table.
+
+
+
+-- Q39. Find staging customers where customer_id already exists in the customers table.
+
+
+
+-- Q40. Find staging customers where customer_id does not exist in the customers table.
+
+
+
+-- =====================================================
+-- PART 9: HARD INTERVIEW JOIN QUESTIONS
+-- =====================================================
+
+-- Q41. Find the customer or customers with the highest total spending.
+
+
+
+-- Q42. Find the product or products with the highest total quantity sold.
+
+
+
+-- Q43. Find the category or categories with the highest total revenue.
+
+
+
+-- Q44. Find customers whose total spending is greater than the average customer spending.
+
+
+
+-- Q45. Find products whose total revenue is greater than the average product revenue.
+
+
+
+-- Q46. Find departments where the average salary is greater than the company average salary.
+
+
+
+-- Q47. Find employees whose salary is greater than the average salary of their own department.
+
+
+
+-- Q48. Find customers who placed an order but never made a successful payment.
+
+
+
+-- Q49. Find orders where payment amount does not match the calculated order net amount.
+
+
+
+-- Q50. Find products that were ordered but are missing from inventory.
+
+
+
+-- =====================================================
+-- END OF MODULE 4
+-- =====================================================
