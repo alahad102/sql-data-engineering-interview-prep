@@ -114,26 +114,55 @@ GROUP BY department_id;
 
 -- Q11. Find departments that have more than 5 employees.
 
-
+SELECT 
+    department_id, count(employee_id) as total_employee
+FROM 
+    employees
+GROUP BY 
+    department_id
+HAVING 
+    total_employee > 5;
 
 
 -- Q12. Find departments where average salary is greater than 60000.
 
+SELECT 
+    department_id, avg(salary) as average_salary
+FROM
+    employees
+GROUP BY 
+    department_id
+HAVING
+    average_salary > 60000;
 
 
 -- Q13. Find departments sorted by employee count from highest to lowest.
 
-
+SELECT department_id, count(employee_id) as total_count
+FROM employees
+GROUP BY department_id
+ORDER BY total_count DESC;
 
 
 -- Q14. Find the top 3 departments with the highest average salary.
 
-
+SELECT department_id, AVG(salary) as average_salary
+FROM
+    employees
+GROUP BY department_id
+ORDER BY average_salary DESC
+LIMIT 3;
 
 
 -- Q15. Find departments where the difference between max salary and min salary is greater than 30000.
 
-
+SELECT
+    department_id, (max(salary) - min(salary)) as difference_salary
+FROM
+    employees
+GROUP BY
+    department_id
+HAVING difference_salary > 30000;
 
 
 -- Q16. Count unique job titles in each department.
