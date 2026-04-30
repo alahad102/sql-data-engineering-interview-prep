@@ -81,20 +81,24 @@ FROM employees;
 -- Q7. Count how many unique departments exist.
 
 
-SELECT count(DISTINCT department_name)
-FROM departments;
+SELECT COUNT(DISTINCT department_id)
+FROM employees;
 
 
 -- Q8. Count employees in each department.
 
-SELECT count(employee_id) as employees_per_department
+SELECT 
+    department_id,
+    COUNT(employee_id) AS employees_per_department
 FROM employees
 GROUP BY department_id;
 
 
 -- Q9. Find average salary in each department.
 
-SELECT avg(salary) as average_salary_by_department
+SELECT 
+    department_id,
+    AVG(salary) AS average_salary_by_department
 FROM employees
 GROUP BY department_id;
 
@@ -102,7 +106,7 @@ GROUP BY department_id;
 -- Q10. Find maximum salary in each department.
 
 
-SELECT max(salary) as max_salary_by_department
+SELECT department_id, max(salary) as max_salary_by_department
 FROM employees
 GROUP BY department_id;
 
@@ -199,11 +203,15 @@ HAVING total_count > 3;
 -- but only include employees from department 10.
 
 SELECT
-    job_title, salary
+    job_title, sum(salary)
 FROM 
     employees
 WHERE 
-    salary > 150000 AND department_id = 10;
+    department_id = 10
+GROUP BY 
+    job_title
+HAVING 
+    SUM(salary) > 150000;
 
 
 
@@ -267,6 +275,18 @@ ORDER BY count_emp desc
 LIMIT 1;
 
 
+SELECT department_id, COUNT(*) AS count_emp
+FROM employees
+GROUP BY department_id
+HAVING COUNT(*) = (
+    SELECT MAX(dept_count)
+    FROM (
+        SELECT COUNT(*) AS dept_count
+        FROM employees
+        GROUP BY department_id
+    ) AS grouped_counts
+);
+
 -- Q25. Find the department or departments with the highest average salary.
 
 SELECT 
@@ -279,6 +299,22 @@ order BY
     avg_sal desc
 limit 1;
 
+SELECT
+    department_id, avg(salary) as avg_sal
+FROM
+    employees
+GROUP BY 
+    department_id
+HAVING
+    avg_sal = (
+        SELECT max(avg_sal) FROM
+        (SELECT
+            avg(salary) as avg_sal
+        FROM
+            employees
+        GROUP BY 
+            department_id) as t1
+    );
     
 
 
