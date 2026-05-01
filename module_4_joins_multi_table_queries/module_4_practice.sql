@@ -344,13 +344,37 @@ GROUP BY
     c.category_id,
     c.category_name;
 
-
-
 -- =====================================================
 -- PART 5: MULTI-TABLE JOINS
 -- =====================================================
 
 -- Q21. Show order id, customer full name, product name, category name, quantity, and net line amount.
+
+SELECT
+    oi.order_id,
+    concat(c.first_name,' ',c.last_name) as full_name,
+    p.product_name,
+    ct.category_name,
+    oi.quantity,
+    ((oi.quantity * oi.unit_price) - oi.discount_amount) as net_line_amount
+FROM
+    order_items as oi
+JOIN
+    products as p
+ON
+    oi.product_id = p.product_id
+JOIN
+    categories as ct
+ON
+    ct.category_id = p.category_id
+JOIN
+    orders as o
+ON
+    o.order_id = oi.order_id
+JOIN
+    customers as c
+ON 
+    c.customer_id = o.customer_id;
 
 
 
