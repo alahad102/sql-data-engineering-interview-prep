@@ -98,9 +98,31 @@ ON
 
 -- Q6. Show each order id, customer full name, order date, and channel.
 
+SELECT
+    o.order_id, 
+    concat(c.first_name,' ',c.last_name) as customer_full_name,
+    o.order_date,
+    o.channel
+FROM
+    orders as o
+JOIN
+    customers as c
+ON
+    o.customer_id = c.customer_id;
 
 
 -- Q7. Show each order item with order id, product name, quantity, unit price, and discount amount.
+
+SELECT
+    order_id, product_name, quantity, unit_price, discount_amount
+FROM
+    orders as o
+JOIN
+    fact_sales as fs
+ON o.order_id = fs.order_id
+JOIN
+    products as p
+ON p.
 
 
 
