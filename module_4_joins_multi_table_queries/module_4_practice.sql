@@ -170,23 +170,65 @@ ON
 
 -- Q11. Show all customers and their orders, including customers who never placed an order.
 
+SELECT
+    *
+FROM
+    customers as c
+LEFT JOIN
+    orders as o
+ON
+    c.customer_id = o.customer_id;
+
 
 
 -- Q12. Find customers who never placed an order.
 
-
+SELECT
+    *
+FROM 
+    customers as c
+LEFT JOIN
+    orders as o
+ON
+    c.customer_id = o.customer_id
+WHERE 
+    order_id is NULL;
 
 -- Q13. Show all orders and their shipment status, including orders that may not have shipment records.
 
+SELECT  
+    *
+FROM
+    orders as o
+LEFT JOIN
+    shipments as s
+ON
+    o.order_id = s.order_id;
 
 
 -- Q14. Find orders that do not have a shipment record.
 
-
+SELECT
+    *
+FROM 
+    orders as o
+LEFT JOIN
+    shipments as s
+ON
+    o.order_id = s.order_id
+WHERE
+    s.shipment_id is NULL;
 
 -- Q15. Show all products and their inventory stock quantity, including products that may not exist in inventory.
 
-
+SELECT
+    *
+FROM
+    products as p
+LEFT JOIN
+    inventory as i
+ON
+    p.product_id = i.product_id;
 
 -- =====================================================
 -- PART 4: JOIN WITH AGGREGATION
