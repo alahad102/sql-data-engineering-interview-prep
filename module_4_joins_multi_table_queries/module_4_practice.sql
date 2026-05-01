@@ -236,21 +236,113 @@ ON
 
 -- Q16. Count total orders placed by each customer.
 
+SELECT
+    concat(c.first_name,' ',c.last_name) as full_name,
+    count(order_id) as total_orders_count
+FROM
+    customers as c
+JOIN
+    orders as o
+ON 
+    c.customer_id = o.customer_id
+GROUP BY
+    c.customer_id,
+    full_name;
+
 
 
 -- Q17. Find customers who placed more than 2 orders.
 
+SELECT 
+    concat(c.first_name,' ',c.last_name) as Full_name,
+    count(o.order_id) as total_orders_count
+FROM
+    customers as c
+JOIN
+    orders as o
+ON 
+    c.customer_id = o.customer_id
+GROUP BY 
+    Full_name
+HAVING 
+    total_orders_count > 2;
 
+--better version
+
+SELECT 
+    c.customer_id,
+    CONCAT(c.first_name, ' ', c.last_name) AS full_name,
+    COUNT(o.order_id) AS total_orders_count
+FROM customers AS c
+JOIN orders AS o
+    ON c.customer_id = o.customer_id
+GROUP BY 
+    c.customer_id,
+    full_name
+HAVING 
+    COUNT(o.order_id) > 2;
 
 -- Q18. Find total sales amount per customer using orders and order_items.
 
+SELECT
+    customer_id, sum(quantity*unit_price) as total_amount
+FROM
+    orders as o
+JOIN
+    order_items as oi
+ON
+    o.order_id = oi.order_id
+GROUP BY
+    o.customer_id;
 
+--better version
+
+SELECT
+    c.customer_id,
+    CONCAT(c.first_name, ' ', c.last_name) AS customer_full_name,
+    SUM((oi.quantity * oi.unit_price) - oi.discount_amount) AS total_sales_amount
+FROM customers AS c
+JOIN orders AS o
+    ON c.customer_id = o.customer_id
+JOIN order_items AS oi
+    ON o.order_id = oi.order_id
+GROUP BY
+    c.customer_id,
+    customer_full_name;
 
 -- Q19. Find total quantity sold for each product.
 
-
+SELECT
+    p.product_name, sum(fs.quantity) as total_quantity_sold
+FROM 
+    products as p
+JOIN
+    fact_sales as fs
+ON
+    p.product_id = fs.product_id
+GROUP BY
+    p.product_id,
+    p.product_name;
 
 -- Q20. Find total revenue per product category.
+
+
+SELECT 
+    c.category_name,
+    SUM((oi.quantity * oi.unit_price) - oi.discount_amount) AS total_revenue
+FROM 
+    categories AS c
+JOIN 
+    products AS p
+ON 
+    c.category_id = p.category_id
+JOIN 
+    order_items AS oi
+ON 
+    p.product_id = oi.product_id
+GROUP BY 
+    c.category_id,
+    c.category_name;
 
 
 
