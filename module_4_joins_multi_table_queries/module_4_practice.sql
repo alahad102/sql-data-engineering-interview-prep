@@ -112,29 +112,55 @@ ON
 
 
 -- Q7. Show each order item with order id, product name, quantity, unit price, and discount amount.
-
 SELECT
-    order_id, product_name, quantity, unit_price, discount_amount
+    o.order_id, p.product_name, o.quantity, o.unit_price, o.discount_amount
 FROM
-    orders as o
-JOIN
-    fact_sales as fs
-ON o.order_id = fs.order_id
+    order_items as o
 JOIN
     products as p
-ON p.
+ON 
+    o.product_id = p.product_id;
 
 
 
 -- Q8. Show each order id, product name, quantity, and line total before discount.
 
-
+SELECT
+    oi.order_id,
+    p.product_name,
+    oi.quantity,
+    oi.quantity * oi.unit_price AS line_total_before_discount
+FROM order_items AS oi
+JOIN products AS p
+    ON oi.product_id = p.product_id;
 
 -- Q9. Show each order id, product name, quantity, and line total after discount.
+
+SELECT
+    oi.order_id,
+    p.product_name,
+    oi.quantity,
+    ((oi.quantity * oi.unit_price) - oi.discount_amount) AS line_total_after_discount
+FROM order_items AS oi
+JOIN products AS p
+    ON oi.product_id = p.product_id;
 
 
 
 -- Q10. Show each payment with order id, customer full name, payment method, payment status, and amount.
+
+SELECT
+    o.order_id, CONCAT(c.first_name,' ',c.last_name) as full_name, p.payment_method, p.payment_status, p.amount
+FROM
+    orders as o
+JOIN
+    customers as c
+ON 
+    o.customer_id = c.customer_id
+JOIN
+    payments as p
+ON
+    p.order_id = o.order_id;
 
 
 
