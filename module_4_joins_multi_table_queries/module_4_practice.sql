@@ -405,9 +405,6 @@ ON
     s.supplier_id = p.supplier_id;
 
 
-
-
-
 -- Q23. Show category name and total revenue for each category.
 
 
