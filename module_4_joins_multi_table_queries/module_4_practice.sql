@@ -380,6 +380,32 @@ ON
 
 -- Q22. Show customer full name, product name, supplier name, and order date for every purchased product.
 
+SELECT
+    concat(first_name,' ',last_name) as Full_name,
+    p.product_name,
+    s.supplier_name,
+    o.order_date
+FROM
+    customers as c
+JOIN
+    orders as o
+ON
+    c.customer_id = o.customer_id
+JOIN
+    order_items as oi
+ON
+    oi.order_id = o.order_id
+JOIN
+    products as p
+ON
+    p.product_id = oi.product_id
+JOIN
+    suppliers as s 
+ON
+    s.supplier_id = p.supplier_id;
+
+
+
 
 
 -- Q23. Show category name and total revenue for each category.
