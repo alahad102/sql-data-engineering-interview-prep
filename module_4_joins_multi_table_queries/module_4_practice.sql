@@ -407,10 +407,42 @@ ON
 
 -- Q23. Show category name and total revenue for each category.
 
+SELECT
+    ct.category_id, ct.category_name, sum((oi.quantity * oi.unit_price) - oi.discount_amount) as total_revenue
+FROM 
+    order_items as oi
+JOIN
+    products as p
+ON
+    oi.product_id = p.product_id
+JOIN
+    categories as ct
+ON
+    ct.category_id = p.category_id
+GROUP BY
+    category_id,
+    category_name;
+
 
 
 -- Q24. Show supplier name and total revenue generated from their products.
 
+
+SELECT
+    s.supplier_id, s.supplier_name, sum((oi.quantity * oi.unit_price) - oi.discount_amount) as total_revenue
+FROM
+    products as p
+JOIN
+    suppliers as s
+ON
+    p.supplier_id = s.supplier_id
+JOIN
+    order_items as oi
+ON
+    oi.product_id = p.product_id
+GROUP BY
+    supplier_id,
+    supplier_name;
 
 
 -- Q25. Show customer full name and total amount paid successfully.
