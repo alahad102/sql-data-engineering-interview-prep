@@ -381,7 +381,7 @@ ON
 -- Q22. Show customer full name, product name, supplier name, and order date for every purchased product.
 
 SELECT
-    concat(first_name,' ',last_name) as Full_name,
+    concat(c.first_name,' ',c.last_name) as Full_name,
     p.product_name,
     s.supplier_name,
     o.order_date
@@ -447,6 +447,26 @@ GROUP BY
 
 -- Q25. Show customer full name and total amount paid successfully.
 
+SELECT
+    c.customer_id,
+    CONCAT(c.first_name, ' ', c.last_name) AS full_name,
+    SUM(p.amount) AS total_amount_paid
+FROM 
+    customers AS c
+JOIN 
+    orders AS o
+ON 
+    c.customer_id = o.customer_id
+JOIN 
+    payments AS p
+ON 
+    o.order_id = p.order_id
+WHERE 
+    p.payment_status = 'Successful'
+GROUP BY
+    c.customer_id,
+    full_name;
+
 
 
 -- =====================================================
@@ -455,21 +475,89 @@ GROUP BY
 
 -- Q26. Show customers who placed orders through the Online channel.
 
+SELECT DISTINCT
+    c.customer_id, concat(c.first_name,' ',c.last_name) as Full_name, o.channel
+FROM
+    customers as c
+JOIN
+    orders as o
+ON
+    c.customer_id = o.customer_id
+WHERE
+    o.channel = 'Online';
+
 
 
 -- Q27. Show products sold in completed orders only.
 
 
+SELECT DISTINCT
+    p.product_id, p.product_name, o.order_status
+FROM 
+    products as p
+JOIN
+    order_items as oi
+ON
+    p.product_id = oi.product_id
+JOIN 
+    orders as o
+ON
+    o.order_id = oi.order_id
+WHERE 
+    o.order_status = 'Completed';
+
 
 -- Q28. Show customers who had failed or pending payments.
+
+SELECT
+    concat(c.first_name,' ',c.last_name) as Full_name, p.payment_status
+FROM
+    customers as c
+JOIN
+    orders as o 
+ON
+    c.customer_id = o.customer_id
+JOIN
+    payments as p
+ON
+    p.order_id = o.order_id
+WHERE
+    p.payment_status IN ('Failed','Pending');
 
 
 
 -- Q29. Show orders that were delivered by FedEx.
 
+SELECT
+    o.order_id, s.carrier
+FROM
+    orders as o
+JOIN
+    shipments as s
+ON
+    o.order_id = s.order_id
+WHERE
+    s.carrier = 'FedEx'
+    AND
+    s.shipment_status = 'Delivered';
+
 
 
 -- Q30. Show active products that have stock quantity less than 50.
+
+SELECT
+    p.product_name, i.stock_quantity, p.product_status
+FROM
+    products as p
+JOIN
+    inventory as i
+ON
+    p.product_id = i.product_id
+WHERE
+    i.stock_quantity < 50
+    AND
+    p.product_status = 'Active';
+
 
 
 
@@ -479,9 +567,35 @@ GROUP BY
 
 -- Q31. Show each employee with their manager name.
 
+SELECT e.employee_id, 
+       CONCAT(e.first_name,' ',e.last_name) as employee_name, 
+       m.manager_id,
+       CONCAT(m.first_name,' ',m.last_name) as manager_name
+FROM
+    employees as e
+JOIN
+    employees as m
+ON
+    e.manager_id = m.employee_id;
+
+SELECT
+    e.employee_id,
+    m.employee_id,
+    e.first_name,
+    m.first_name,
+    e.manager_id,
+    m.manager_id   
+FROM
+    employees as e
+LEFT JOIN
+    employees as m
+ON
+    e.employee_id = m.manager_id;
 
 
 -- Q32. Show employees who do not have a manager.
+
+
 
 
 
