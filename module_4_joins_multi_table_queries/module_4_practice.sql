@@ -567,30 +567,14 @@ WHERE
 
 -- Q31. Show each employee with their manager name.
 
-SELECT e.employee_id, 
-       CONCAT(e.first_name,' ',e.last_name) as employee_name, 
-       m.manager_id,
-       CONCAT(m.first_name,' ',m.last_name) as manager_name
-FROM
-    employees as e
-JOIN
-    employees as m
-ON
-    e.manager_id = m.employee_id;
-
 SELECT
     e.employee_id,
-    m.employee_id,
-    e.first_name,
-    m.first_name,
+    CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
     e.manager_id,
-    m.manager_id   
-FROM
-    employees as e
-LEFT JOIN
-    employees as m
-ON
-    e.employee_id = m.manager_id;
+    CONCAT(m.first_name, ' ', m.last_name) AS manager_name
+FROM employees AS e
+JOIN employees AS m
+    ON e.manager_id = m.employee_id;
 
 
 -- Q32. Show employees who do not have a manager.
@@ -608,27 +592,36 @@ WHERE
 -- Q33. Show each manager and the number of employees reporting to them.
 
 SELECT
-    manager_id, count(manager_id) as employee_reporting_count
-
-FROM
-    employees
+    m.employee_id AS manager_id,
+    CONCAT(m.first_name, ' ', m.last_name) AS manager_name,
+    COUNT(e.employee_id) AS employee_reporting_count
+FROM employees AS e
+JOIN employees AS m
+    ON e.manager_id = m.employee_id
 GROUP BY
-    manager_id
-HAVING
-    manager_id is NOT NULL;
+    m.employee_id,
+    manager_name;
 
 -- Q34. Show employees whose salary is greater than their manager's salary.
 
 SELECT
-    concat(e.first_name,' ',e.last_name) as employee_name
+    e.employee_id,
+    CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
+    e.salary AS employee_salary,
+    CONCAT(m.first_name, ' ', m.last_name) AS manager_name,
+    m.salary AS manager_salary
+FROM employees AS e
+JOIN employees AS m
+    ON e.manager_id = m.employee_id
+WHERE e.salary > m.salary;
+
+SELECT
+    concat(first_name,' ',last_name) as Employee_name, salary
 FROM
-    employees as e
-JOIN
-    employees as m
-ON
-    e.employee_id = m.manager_id
-WHERE
-    e.salary > m.salary;
+    employees
+ORDER BY
+    salary DESC;
+ 
 
 
 -- =====================================================
