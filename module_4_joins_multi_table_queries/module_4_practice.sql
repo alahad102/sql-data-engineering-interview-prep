@@ -595,16 +595,40 @@ ON
 
 -- Q32. Show employees who do not have a manager.
 
-
+SELECT
+    concat(first_name,' ',last_name) as Employee_name,
+    manager_id
+FROM
+    employees
+WHERE
+    manager_id is NULL;
 
 
 
 -- Q33. Show each manager and the number of employees reporting to them.
 
+SELECT
+    manager_id, count(manager_id) as employee_reporting_count
 
+FROM
+    employees
+GROUP BY
+    manager_id
+HAVING
+    manager_id is NOT NULL;
 
 -- Q34. Show employees whose salary is greater than their manager's salary.
 
+SELECT
+    concat(e.first_name,' ',e.last_name) as employee_name
+FROM
+    employees as e
+JOIN
+    employees as m
+ON
+    e.employee_id = m.manager_id
+WHERE
+    e.salary > m.salary;
 
 
 -- =====================================================
