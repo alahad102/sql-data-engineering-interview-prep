@@ -631,15 +631,39 @@ ORDER BY
 -- Q35. Compare orders table with fact_sales.
 -- Show order ids that exist in orders but do not exist in fact_sales.
 
+SELECT
+    o.order_id, fs.order_id,fs.quantity,o.order_status
+FROM
+    orders as o
+LEFT JOIN
+    fact_sales as fs
+ON
+    o.order_id = fs.order_id
+WHERE
+    fs.order_id is NULL;
 
 
 -- Q36. Show fact_sales records with customer full name from dim_customer.
 
-
+SELECT
+    dc.full_name, fs.*
+FROM
+    dim_customer as dc
+JOIN
+    fact_sales as fs
+ON
+    dc.customer_id = fs.customer_id;
 
 -- Q37. Show fact_sales records with product name and category name from dim_product.
 
-
+SELECT 
+    dp.product_name, dp.category_name, fs.*
+FROM
+    fact_sales as fs
+JOIN
+    dim_product as dp
+ON
+    fs.product_id = dp.product_id;
 
 -- Q38. Find staging orders where customer_id does not exist in the customers table.
 
