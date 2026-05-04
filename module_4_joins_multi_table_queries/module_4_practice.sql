@@ -668,7 +668,7 @@ ON
 -- Q38. Find staging orders where customer_id does not exist in the customers table.
 
 SELECT 
-    so.*, so.customer_id, c.customer_id
+    so.*
 FROM
     stg_orders as so
 LEFT JOIN
@@ -680,12 +680,30 @@ WHERE
 
 -- Q39. Find staging customers where customer_id already exists in the customers table.
 
+SELECT 
+    sc.*
+FROM
+    stg_customers as sc
+LEFT JOIN
+    customers as c
+ON
+    sc.customer_id = c.customer_id
+WHERE
+    c.customer_id is NOT NULL;
 
 
 -- Q40. Find staging customers where customer_id does not exist in the customers table.
 
-
-
+SELECT 
+    sc.*
+FROM
+    stg_customers as sc
+LEFT JOIN
+    customers as c
+ON
+    sc.customer_id = c.customer_id
+WHERE
+    c.customer_id is NULL;
 -- =====================================================
 -- PART 9: HARD INTERVIEW JOIN QUESTIONS
 -- =====================================================
