@@ -667,7 +667,16 @@ ON
 
 -- Q38. Find staging orders where customer_id does not exist in the customers table.
 
-
+SELECT 
+    so.*, so.customer_id, c.customer_id
+FROM
+    stg_orders as so
+LEFT JOIN
+    customers as c
+ON
+    so.customer_id = c.customer_id
+WHERE
+    c.customer_id is NULL;
 
 -- Q39. Find staging customers where customer_id already exists in the customers table.
 
