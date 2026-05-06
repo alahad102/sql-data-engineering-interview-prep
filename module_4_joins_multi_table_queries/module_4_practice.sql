@@ -749,6 +749,36 @@ HAVING SUM(p.amount) = (
 
 -- Q42. Find the product or products with the highest total quantity sold.
 
+SELECT
+    p.product_id, p.product_name, sum(fs.quantity) as total_quantity_sold
+FROM 
+    products as p
+JOIN
+    fact_sales as fs
+ON
+    p.product_id = fs.product_id
+GROUP BY    
+    p.product_id,
+    p.product_name
+HAVING
+    sum(fs.quantity) =(
+        SELECT 
+            max(total_quantity_sold)
+        FROM 
+        (   SELECT
+                sum(fs.quantity) as total_quantity_sold
+            FROM
+                products as p
+            JOIN
+                fact_sales as fs
+            ON
+                p.product_id = fs.product_id
+            GROUP BY    
+                p.product_id,
+                p.product_name) as t1
+
+    );
+
 
 
 -- Q43. Find the category or categories with the highest total revenue.
