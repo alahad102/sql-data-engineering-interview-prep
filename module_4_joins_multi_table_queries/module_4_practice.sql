@@ -710,6 +710,7 @@ WHERE
 
 -- Q41. Find the customer or customers with the highest total spending.
 
+
 SELECT
     concat(c.first_name,' ',c.last_name) as Full_name,
     sum(p.amount) as total_spending
