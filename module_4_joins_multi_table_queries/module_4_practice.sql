@@ -712,21 +712,37 @@ WHERE
 
 
 SELECT
-    concat(c.first_name,' ',c.last_name) as Full_name,
-    sum(p.amount) as total_spending
-FROM
-    customers as c
-JOIN
-    orders as o
-ON
+    c.customer_id,
+    CONCAT(c.first_name, ' ', c.last_name) AS full_name,
+    SUM(p.amount) AS total_spending
+FROM 
+    customers AS c
+JOIN 
+    orders AS o
+ON 
     c.customer_id = o.customer_id
-JOIN
-    payments as p
-ON
+JOIN 
+    payments AS p
+ON 
     o.order_id = p.order_id
+WHERE 
+    p.payment_status = 'Successful'
 GROUP BY
-    concat(c.first_name,' ',c.last_name)
-LIMIT 1;
+    c.customer_id,
+    full_name
+HAVING SUM(p.amount) = (
+    SELECT MAX(customer_total)
+    FROM (
+        SELECT
+            o.customer_id,
+            SUM(p.amount) AS customer_total
+        FROM orders AS o
+        JOIN payments AS p
+            ON o.order_id = p.order_id
+        WHERE p.payment_status = 'Successful'
+        GROUP BY o.customer_id
+    ) AS t
+);
 
 
 
