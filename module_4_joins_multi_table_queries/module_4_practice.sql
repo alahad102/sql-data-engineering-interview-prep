@@ -827,7 +827,41 @@ HAVING
 
 -- Q44. Find customers whose total spending is greater than the average customer spending.
 
+SELECT
+    c.customer_id, 
+    CONCAT(c.first_name, ' ', c.last_name) as Full_name,
+    sum(fs.net_amount) as total_spent
+FROM
+    customers as c
+JOIN
+    fact_sales as fs
+ON
+    c.customer_id = fs.customer_id
+GROUP BY
+    c.customer_id,
+    full_name
+HAVING
+    sum(fs.net_amount) > (
+        SELECT
+            avg(total_spent)
+        FROM
+        (
+            SELECT 
+                c.customer_id,
+                CONCAT(c.first_name, ' ', c.last_name) as full_name,
+                SUM(net_amount) AS total_spent
+            FROM
+                customers as c
+            JOIN
+                fact_sales as fs
+            ON
+                c.customer_id = fs.customer_id
+            GROUP BY
+                c.customer_id,
+                full_name
 
+        ) as t1
+    );
 
 -- Q45. Find products whose total revenue is greater than the average product revenue.
 
