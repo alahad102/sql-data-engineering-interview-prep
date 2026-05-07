@@ -865,7 +865,17 @@ HAVING
 
 -- Q45. Find products whose total revenue is greater than the average product revenue.
 
-
+SELECT
+    p.product_id, p.product_name, SUM(fs.net_amount)
+FROM
+    products as p
+JOIN
+    fact_sales as fs
+ON
+    p.product_id = fs.product_id
+GROUP BY
+    p.product_id, 
+    p.product_name
 
 -- Q46. Find departments where the average salary is greater than the company average salary.
 
