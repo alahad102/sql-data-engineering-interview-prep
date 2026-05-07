@@ -783,6 +783,46 @@ HAVING
 
 -- Q43. Find the category or categories with the highest total revenue.
 
+SELECT
+    c.category_id, 
+    c.category_name, 
+    sum(fs.net_amount) as highest_total_revenue
+FROM
+    fact_sales as fs
+JOIN
+    products as p
+ON
+    fs.product_id = p.product_id
+JOIN
+    categories as c
+ON
+    c.category_id = p.category_id
+GROUP BY
+    c.category_id,
+    c.category_name
+HAVING
+    sum(fs.net_amount) =(
+        SELECT 
+            max(total_revenue)
+        FROM
+            (SELECT
+                c.category_id, 
+                c.category_name, 
+                sum(fs.net_amount) as total_revenue
+             FROM
+                fact_sales as fs
+             JOIN
+                products as p
+             ON
+                fs.product_id = p.product_id
+             JOIN
+                categories as c
+             ON
+                c.category_id = p.category_id
+             GROUP BY
+                c.category_id,
+                c.category_name) as t1
+    );
 
 
 -- Q44. Find customers whose total spending is greater than the average customer spending.
