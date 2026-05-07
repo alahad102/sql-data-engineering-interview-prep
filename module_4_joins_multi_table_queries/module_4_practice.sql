@@ -900,6 +900,29 @@ HAVING
         ) as t1
     )
     
+-- better version/
+
+SELECT
+    p.product_id, 
+    p.product_name, 
+    SUM(fs.net_amount) AS total_revenue
+FROM products AS p
+JOIN fact_sales AS fs
+    ON p.product_id = fs.product_id
+GROUP BY
+    p.product_id, 
+    p.product_name
+HAVING SUM(fs.net_amount) > (
+    SELECT 
+        AVG(total_revenue)
+    FROM (
+        SELECT 
+            product_id, 
+            SUM(net_amount) AS total_revenue
+        FROM fact_sales
+        GROUP BY product_id
+    ) AS t1
+);
 
 -- Q46. Find departments where the average salary is greater than the company average salary.
 
