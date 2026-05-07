@@ -926,7 +926,25 @@ HAVING SUM(fs.net_amount) > (
 
 -- Q46. Find departments where the average salary is greater than the company average salary.
 
-
+SELECT
+    d.department_id, 
+    d.department_name,
+    avg(e.salary) as avg_salary
+FROM
+    departments as d
+JOIN
+    employees as e
+ON 
+    d.department_id = e.department_id
+GROUP BY
+    d.department_id,
+    d.department_name
+HAVING avg(e.salary) > (
+    SELECT
+       avg(salary)
+    FROM 
+        employees
+);
 
 
 
