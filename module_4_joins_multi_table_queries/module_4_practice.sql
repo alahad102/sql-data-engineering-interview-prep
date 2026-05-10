@@ -962,19 +962,22 @@ ON
     e.department_id = d.department_id
 WHERE e.salary > (
     SELECT
-        d.department_id,
-        d.department_name, 
-        AVG(e.salary)
+        salary
     FROM
-        employees as e
-    JOIN
-        departments as d
-    ON
-        e.department_id = d.department_id
-    GROUP by
-        d.department_id,
-        d.department_name
-)
+        (SELECT
+            d.department_id,
+            d.department_name, 
+            AVG(e.salary) as salary
+        FROM
+            employees as e
+        JOIN
+            departments as d
+        ON
+            e.department_id = d.department_id
+        GROUP by
+            d.department_id,
+            d.department_name) as t1
+);
 
 
 -- Q48. Find customers who placed an order but never made a successful payment.
