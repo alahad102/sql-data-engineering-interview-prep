@@ -950,6 +950,31 @@ HAVING avg(e.salary) > (
 
 -- Q47. Find employees whose salary is greater than the average salary of their own department.
 
+SELECT
+    e.employee_id,
+    concat(e.first_name,' ',e.last_name) as full_name,
+    e.salary
+FROM
+    employees as e
+JOIN
+    departments as d
+ON
+    e.department_id = d.department_id
+WHERE e.salary > (
+    SELECT
+        d.department_id,
+        d.department_name, 
+        AVG(e.salary)
+    FROM
+        employees as e
+    JOIN
+        departments as d
+    ON
+        e.department_id = d.department_id
+    GROUP by
+        d.department_id,
+        d.department_name
+)
 
 
 -- Q48. Find customers who placed an order but never made a successful payment.
