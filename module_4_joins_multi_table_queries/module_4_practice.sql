@@ -982,7 +982,10 @@ WHERE e.salary > (
 
 -- Q48. Find customers who placed an order but never made a successful payment.
 
+SELECT
 
+FROM
+    customers
 
 -- Q49. Find orders where payment amount does not match the calculated order net amount.
 
