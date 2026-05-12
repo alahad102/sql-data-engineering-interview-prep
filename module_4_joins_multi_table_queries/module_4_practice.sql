@@ -983,9 +983,10 @@ WHERE e.salary > (
 -- Q48. Find customers who placed an order but never made a successful payment.
 
 SELECT
+    c.first_name, p. payment_status
 
 FROM
-    customers
+    customers as c
 
 -- Q49. Find orders where payment amount does not match the calculated order net amount.
 
