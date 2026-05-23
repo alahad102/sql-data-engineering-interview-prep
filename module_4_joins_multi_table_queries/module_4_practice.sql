@@ -982,9 +982,39 @@ WHERE e.salary > (
 
 -- Q48. Find customers who placed an order but never made a successful payment.
 
+SELECT c.first_name, c.last_name, o.order_status, p.payment_status
+FROM
+    customers as c
+JOIN
+    orders as o 
+ON
+    c.customer_id = o.customer_id
+JOIN
+    payments as p
+ON
+    o.order_id = p.order_id
+where
+    o.order_status = 'Completed'
+    AND
+    p.payment_status <> 'Successful';
 
+SELECT
+    c.customer_id,
+    c.first_name,
+    c.last_name,
+    o.order_id,
+    o.order_status
+FROM customers AS c
+JOIN orders AS o
+    ON c.customer_id = o.customer_id
+LEFT JOIN payments AS p
+    ON o.order_id = p.order_id
+    AND p.payment_status = 'Successful'
+WHERE p.payment_id IS NULL;
 
 -- Q49. Find orders where payment amount does not match the calculated order net amount.
+
+
 
 
 
