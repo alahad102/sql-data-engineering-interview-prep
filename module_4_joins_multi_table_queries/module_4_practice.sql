@@ -1015,12 +1015,75 @@ WHERE p.payment_id IS NULL;
 -- Q49. Find orders where payment amount does not match the calculated order net amount.
 
 
+SELECT
+    o.order_id, sum(fs.net_amount) as a, sum(p.amount) as b
+FROM
+    orders as o
+JOIN
+    fact_sales as fs
+ON
+    o.order_id = fs.order_id
+JOIN
+    payments as p
+ON
+    o.order_id = p.order_id
+Group by
+    o.order_id
+HAVING
+    a <> b
+
+SELECT
+    o.order_id,
+    fs_total.order_net_amount,
+    COALESCE(p_total.paid_amount, 0) AS paid_amount
+FROM
+    orders AS o
+JOIN (
+    SELECT
+        order_id,
+        SUM(net_amount) AS order_net_amount
+    FROM
+        fact_sales
+    GROUP BY
+        order_id
+) AS fs_total
+ON
+    o.order_id = fs_total.order_id
+LEFT JOIN (
+    SELECT
+        order_id,
+        SUM(amount) AS paid_amount
+    FROM
+        payments
+    WHERE
+        payment_status = 'Successful'
+    GROUP BY
+        order_id
+) AS p_total
+ON
+    o.order_id = p_total.order_id
+WHERE
+    fs_total.order_net_amount <> COALESCE(p_total.paid_amount, 0);
 
 
 
 -- Q50. Find products that were ordered but are missing from inventory.
 
-
+SELECT DISTINCT
+    p.product_id,
+    p.product_name
+FROM
+    fact_sales AS fs
+JOIN
+    products AS p
+ON
+    fs.product_id = p.product_id
+LEFT JOIN
+    inventory AS i
+ON
+    fs.product_id = i.product_id
+WHERE
+    i.product_id IS NULL;
 
 -- =====================================================
 -- END OF MODULE 4
